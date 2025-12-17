@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "FastNeuTTS"
+version = "0.0.1"
+authors = [
+  { name="Yatharth Sharma", email="yatharthsharma3501@gmail.com" },
+]
+description = "High quality and Fast TTS with MiraTTS"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "lmdeploy",
+    "librosa",
+    "fastaudiosr @ git+https://github.com/ysharma3501/FlashSR.git",
+    "ncodec @ git+https://github.com/ysharma3501/FastBiCodec.git",
+    "einops",
+]
+
+[project.urls]
+Homepage = "https://github.com/ysharma3501/MiraTTS"
+Issues = "https://github.com/ysharma3501/MiraTTS/issues"
