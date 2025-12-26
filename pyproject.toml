@@ -17,12 +17,16 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "lmdeploy",
+    "optimum[onnxruntime]>=1.24.0",
     "librosa",
     "fastaudiosr @ git+https://github.com/ysharma3501/FlashSR.git",
     "ncodec @ git+https://github.com/ysharma3501/FastBiCodec.git",
     "einops",
-    "onnxruntime-gpu"
+    "onnxruntime-gpu",
+    "transformers",
+    "torch>=2.2.0",
+    "torchaudio",
+    "omegaconf>=2.3.0",
 ]
 
 [project.urls]

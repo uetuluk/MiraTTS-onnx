@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.egg-info/
+.venv/
+*.pyc
+*.pyo
+
+# Build artifacts
+cache_dir/
+uv.lock
+dist/
+build/
+
+# Test outputs
+output*.wav
+reference.wav
+
+# IDE
+.vscode/
+.idea/
+
+# Claude
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Models (stored on HuggingFace)
+models/

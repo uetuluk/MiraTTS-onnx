@@ -10,38 +10,73 @@ https://github.com/user-attachments/assets/262088ae-068a-49f2-8ad6-ab32c66dcd17
 - Memory efficient: Works within 6gb vram.
 - Low latency: Latency can be low as 100ms.
 
-## Usage
-Simple 1 line installation:
-```
+## Installation
+
+```bash
 uv pip install git+https://github.com/ysharma3501/MiraTTS.git
 ```
 
-Running the model(bs=1):
+## Usage
+
+### Using the INT4 Quantized Model (Recommended)
+
+The repository includes a pre-quantized INT4 model in `models/int4/` for faster inference and lower memory usage.
+
 ```python
 from mira.model import MiraTTS
-from IPython.display import Audio
-mira_tts = MiraTTS('YatharthS/MiraTTS') ## downloads model from huggingface
+import scipy.io.wavfile as wavfile
 
-file = "reference_file.wav" ## can be mp3/wav/ogg or anything that librosa supports
-text = "Alright, so have you ever heard of a little thing named text to speech? Well, it allows you to convert text into speech! I know, that's super cool, isn't it?"
+# Load INT4 model (857MB, 2x faster, 15x less memory)
+tts = MiraTTS('./models/int4', device='cpu')
 
-context_tokens = mira_tts.encode_audio(file)
-audio = mira_tts.generate(text, context_tokens)
+# Encode reference audio for voice cloning
+context = tts.encode_audio('your_reference.wav')
 
-Audio(audio, rate=48000)
+# Generate speech
+text = "Hello! This is a test of the INT4 quantized model."
+audio = tts.generate(text, context)
+
+# Save output
+wavfile.write('output.wav', 48000, audio.cpu().numpy())
 ```
 
-Running the model using batching: 
+### Using from HuggingFace (Auto-downloads FP32 model)
+
 ```python
-file = "reference_file.wav" ## can be mp3/wav/ogg or anything that librosa supports
-text = ["Hey, what's up! I am feeling SO happy!", "Honestly, this is really interesting, isn't it?"]
+from mira.model import MiraTTS
 
-context_tokens = [mira_tts.encode_audio(file)]
+# Downloads and converts model on first use (~2.5GB)
+tts = MiraTTS('YatharthS/MiraTTS')
 
-audio = mira_tts.batch_generate(text, context_tokens)
-
-Audio(audio, rate=48000)
+context = tts.encode_audio('reference.wav')
+audio = tts.generate("Your text here", context)
 ```
+
+### Batch Generation
+
+```python
+texts = ["First sentence.", "Second sentence."]
+context = [tts.encode_audio('reference.wav')]
+
+audio = tts.batch_generate(texts, context)
+```
+
+### GPU Inference
+
+```python
+# For CUDA GPU
+tts = MiraTTS('./models/int4', device='cuda', provider='CUDAExecutionProvider')
+```
+
+## Quantization
+
+To create your own INT4 quantized model:
+
+```bash
+python scripts/quantize_int4.py --model YatharthS/MiraTTS --output ./models/int4
+```
+
+See [docs/ONNX.md](docs/ONNX.md) for detailed documentation on model formats and performance.
 
 Examples can be seen in the [huggingface model](https://huggingface.co/YatharthS/MiraTTS)
 
