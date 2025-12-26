@@ -13,14 +13,23 @@ https://github.com/user-attachments/assets/262088ae-068a-49f2-8ad6-ab32c66dcd17
 ## Installation
 
 ```bash
-uv pip install git+https://github.com/ysharma3501/MiraTTS.git
+# Install from this fork (ONNX Runtime backend)
+pip install git+https://github.com/uetuluk/MiraTTS-onnx.git
+
+# Or install dependencies manually
+pip install onnxruntime-genai torch soundfile
 ```
 
 ## Usage
 
 ### Using the INT4 Quantized Model (Recommended)
 
-The repository includes a pre-quantized INT4 model in `models/int4/` for faster inference and lower memory usage.
+Download the pre-quantized INT4 model from HuggingFace:
+
+```bash
+# Download INT4 model (~857MB)
+huggingface-cli download uetuluk2/MiraTTS-onnx-int4 --local-dir ./models/int4
+```
 
 ```python
 from mira.model import MiraTTS

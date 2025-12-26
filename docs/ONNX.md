@@ -11,10 +11,15 @@ The INT4 quantized model offers the best balance of performance and quality:
 | Property | Value |
 |----------|-------|
 | Size | ~857 MB |
-| Location | `models/int4/` |
+| HuggingFace | [uetuluk2/MiraTTS-onnx-int4](https://huggingface.co/uetuluk2/MiraTTS-onnx-int4) |
 | Precision | 4-bit weights |
 | Speed | ~2x faster than FP32 |
 | Memory | ~15x less than FP32 |
+
+**Download:**
+```bash
+huggingface-cli download uetuluk2/MiraTTS-onnx-int4 --local-dir ./models/int4
+```
 
 **Usage:**
 ```python
